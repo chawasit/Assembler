@@ -11,18 +11,45 @@ def assembler_r():
         instructions.append(line.split("\t"))
     return instructions
 
+<<<<<<< Updated upstream
 def check_instuction(instructions,labels):
+=======
+<<<<<<< Updated upstream
+def check_instuction(instructions):
+=======
+def check_instuction(instructions,labels):
+    memory_index = 0
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     for instruction in instructions:
         opcode = instruction[1].strip()
         if(opcode == "add" or opcode == "nand"):
             print(rtype.rtype(instruction))
         elif(opcode == "lw" or opcode == "sw" or opcode == "beq"):
+<<<<<<< Updated upstream
             print (itype.i_type(instruction,labels))
+=======
+<<<<<<< Updated upstream
+            print(rtype.rtype(instruction))
+>>>>>>> Stashed changes
         elif(opcode == "jalr"):
             print("J-Type")
         elif(opcode == "halt" or opcode == "noop"):
             print(otype.otype(instruction))
+<<<<<<< Updated upstream
         memory = instruction[1]
+=======
+        else:
+            print("orther")
+=======
+            print (itype.i_type(instruction,labels,memory_index))
+        elif(opcode == "jalr"):
+            print(jtype.jtype(instruction))
+        elif(opcode == "halt" or opcode == "noop" or opcode == ".fill"):
+            print(otype.otype(instruction,labels))
+        memory_index += 1
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 def check_label(instructions):
     memory_index = 0
