@@ -11,7 +11,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 
 $(TARGET): $(OBJS)
-	g++ $(LDFLAGS) -Wc++11-extensions $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS)
+	g++ $(LDFLAGS) -std=c++11 -Wc++11-extensions $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS)
 
 .PHONY: clean
 clean:
