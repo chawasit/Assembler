@@ -2,26 +2,27 @@
 import sys
 import rtype
 import otype
+import itype
+
 def assembler_r():
     instructions = []
     in_file = open(sys.argv[2], "r")
     for line in in_file:
-        instructions.append(line.split("  "))
+        instructions.append(line.split("\t"))
     return instructions
 
-def check_instuction(instructions):
+def check_instuction(instructions,labels):
     for instruction in instructions:
         opcode = instruction[1].strip()
         if(opcode == "add" or opcode == "nand"):
             print(rtype.rtype(instruction))
         elif(opcode == "lw" or opcode == "sw" or opcode == "beq"):
-            print(rtype.rtype(instruction))
+            print (itype.i_type(instruction,labels))
         elif(opcode == "jalr"):
-            print("I-Type")
+            print("J-Type")
         elif(opcode == "halt" or opcode == "noop"):
             print(otype.otype(instruction))
-        else:
-            print("orther")
+        memory = instruction[1]
 
 def check_label(instructions):
     memory_index = 0
@@ -34,10 +35,10 @@ def check_label(instructions):
             else: 
                 labels[label] = memory_index
         memory_index += 1
-    print(labels)
+    return labels
 
 if __name__ == '__main__':
     if len(sys.argv) == 3:
         instructions = assembler_r()
-        check_label(instructions)
-        check_instuction(instructions)
+        labels = check_label(instructions)
+        check_instuction(instructions,labels)
