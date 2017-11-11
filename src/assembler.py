@@ -11,22 +11,14 @@ def assembler_r():
 def check_instuction(instructions):
     for instruction in instructions:
         instruction = instruction[1]
-        if(instruction == "add"):
-            print("add")
-        elif(instruction == "nand"):
-            print("nand")
-        elif(instruction == "lw"):
-            print("lw")
-        elif(instruction == "sw"):
-            print("sw")
-        elif(instruction == "beq"):
-            print("beq")
+        if(instruction == "add" or instruction == "nand"):
+            print("I-Type")
+        elif(instruction == "lw" or instruction == "sw" or instruction == "beq"):
+            print("R-Type")
         elif(instruction == "jalr"):
-            print("jalr")
-        elif(instruction == "halt"):
-            print("halt")
-        elif(instruction == "noop"):
-            print("noop")
+            print("J-Type")
+        elif(instruction == "halt" or instruction == "noop"):
+            print("O-Type")
         else:
             print("orther")
 
