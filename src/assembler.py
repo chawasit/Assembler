@@ -4,6 +4,8 @@ import rtype
 import otype
 import itype
 import jtype
+import fill
+labels = {}
 
 def assembler_r():
     instructions = []
@@ -12,26 +14,34 @@ def assembler_r():
         instructions.append(line.split("\t"))
     return instructions
 
+def write_output(machine_codes):
+    file = open("machine_code.txt","w")
+    for machine_code in machine_codes:
+        file.write(str(machine_code) + '\n')
+
 def check_instuction(instructions,labels):
     memory_index = 0
+    result = []
     for instruction in instructions:
         opcode = instruction[1].strip()
         if(opcode == "add" or opcode == "nand"):
-            print(rtype.rtype(instruction))
+            result.append(rtype.rtype(instruction))
         elif(opcode == "lw" or opcode == "sw" or opcode == "beq"):
-            print (itype.i_type(instruction,labels,memory_index))
+            result.append (itype.i_type(instruction,labels,memory_index))
         elif(opcode == "jalr"):
-             print(jtype.jtype(instruction))
+            result.append(jtype.jtype(instruction))
         elif(opcode == "halt" or opcode == "noop"):
-            print(otype.otype(instruction,labels))
+            result.append(otype.otype(instruction,labels))
+        elif(opcode == ".fill"):
+            result.append(fill.fill(instruction,labels))
         else:
-            print("orther")
+            print instruction[2]
         memory_index += 1
 
+    write_output(result)
 
 def check_label(instructions):
     memory_index = 0
-    labels = {}
     for instruction in instructions:
         label = instruction[0].strip()
         if(label != ''):

@@ -11,5 +11,8 @@ def i_type(instruction,labels,index):
     try:
         offset = int(instruction[4].strip('\n'))
     except:
-        offset = -index + 1
+        offset = labels[instruction[4].strip('\n')]
+        if instruction[1] == 'beq':
+            offset -= index + 1
+            
     return (op << 22) + (rs << 19) + (rt << 16) + (offset & 0xffff)
