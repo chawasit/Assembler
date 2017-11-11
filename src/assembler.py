@@ -1,6 +1,7 @@
 #!/usr/bin/python2
 import sys
-
+import rtype
+import otype
 def assembler_r():
     instructions = []
     in_file = open(sys.argv[2], "r")
@@ -10,15 +11,15 @@ def assembler_r():
 
 def check_instuction(instructions):
     for instruction in instructions:
-        instruction = instruction[1].strip()
-        if(instruction == "add" or instruction == "nand"):
+        opcode = instruction[1].strip()
+        if(opcode == "add" or opcode == "nand"):
+            print(rtype.rtype(instruction))
+        elif(opcode == "lw" or opcode == "sw" or opcode == "beq"):
+            print(rtype.rtype(instruction))
+        elif(opcode == "jalr"):
             print("I-Type")
-        elif(instruction == "lw" or instruction == "sw" or instruction == "beq"):
-            print("R-Type")
-        elif(instruction == "jalr"):
-            print("J-Type")
-        elif(instruction == "halt" or instruction == "noop"):
-            print("O-Type")
+        elif(opcode == "halt" or opcode == "noop"):
+            print(otype.otype(instruction))
         else:
             print("orther")
 
