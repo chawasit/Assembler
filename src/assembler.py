@@ -9,11 +9,29 @@ import re
 import validator
 labels = {}
 
+three_params_pattern = r"(\w*)[\t ]+(add|nand|lw|sw|beq)[\t ]+(\w*)[\t ]+(\w*)[\t ]+(-?\w*)[\t ]*(.*)"
+otype_pattern = r"(\w*)[\t ]+(halt|noop)(.*)"
+jtype_pattern = r"(\w*)[\t ]+(jalr)[\t ]+(\w+)[\t ]+(\w+)[\t ]*(.*)"
+fill_pattern = r"(\w*)[\t ]+(.fill)[\t ]+(-?\w+)[\t ]*(.*)"
+
+patterns = [three_params_pattern, otype_pattern, jtype_pattern, fill_pattern]
+
 def assembler_r():
     instructions = []
-    in_file = open(sys.argv[2], "r")
+    in_file = open(sys.argv[1], "r")
     for line in in_file:
-        instructions.append(re.split("\t| ",line))
+        find = False
+        instruction_group = []
+        for pattern in patterns:
+            m = re.match(pattern, line)
+            if m is not None:
+                instruction_group = m.groups()
+                find = True
+                break
+        if not find:
+            print "not match any pattern: " + str(line) 
+            sys.exit(1)
+        instructions.append(instruction_group)
     return instructions
 
 def write_output(machine_codes):
@@ -54,7 +72,7 @@ def check_label(instructions):
     return labels
 
 if __name__ == '__main__':
-    if len(sys.argv) == 3:
+    if len(sys.argv) == 2:
         instructions = assembler_r()
         labels = check_label(instructions)
         check_instuction(instructions,labels)
