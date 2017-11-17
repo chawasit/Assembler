@@ -6,6 +6,7 @@ import itype
 import jtype
 import fill
 import re
+import validator
 labels = {}
 
 def assembler_r():
@@ -38,16 +39,15 @@ def check_instuction(instructions,labels):
         else:
             print instruction[2]
         memory_index += 1
-
     write_output(result)
 
 def check_label(instructions):
     memory_index = 0
     for instruction in instructions:
-        label = instruction[0].strip()
+        label = instruction[0].strip('\n')
         if(label != ''):
-            if labels.has_key(label): 
-                print("error")
+            if not(validator.label_isvalid(labels, label)):  
+                sys.exit(1)
             else: 
                 labels[label] = memory_index
         memory_index += 1
@@ -56,7 +56,6 @@ def check_label(instructions):
 if __name__ == '__main__':
     if len(sys.argv) == 3:
         instructions = assembler_r()
-        for i in instructions:
-            print i
-        # labels = check_label(instructions)
-        # check_instuction(instructions,labels)
+        labels = check_label(instructions)
+        check_instuction(instructions,labels)
+    sys.exit(0)

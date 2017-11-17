@@ -1,4 +1,5 @@
 #!/usr/bin/python2
+import validator
 def i_type(instruction,labels,index):
     if instruction[1] == 'lw':
         op = 2
@@ -18,4 +19,8 @@ def i_type(instruction,labels,index):
         if instruction[1] == 'beq':
             offset -= index + 1
             
+    validator.registor_validator(rs)
+    validator.registor_validator(rt)
+    validator.offset_validator(offset)
+
     return (op << 22) + (rs << 19) + (rt << 16) + (offset & 0xffff)
