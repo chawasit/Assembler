@@ -44,7 +44,7 @@ def check_instuction(instructions,labels):
 def check_label(instructions):
     memory_index = 0
     for instruction in instructions:
-        label = instruction[0].strip('\n')
+        label = instruction[0].strip('\r\n')
         if(label != ''):
             if not(validator.label_isvalid(labels, label)):  
                 sys.exit(1)
