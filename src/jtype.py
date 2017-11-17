@@ -7,4 +7,4 @@ def jtype(instruction):
     validator.registor_validator(regA)
     validator.registor_validator(regB)
 
-    return opcode << 22 + regA << 19 + regB << 16
+    return (opcode << 22) + (regA << 19) + (regB << 16)
