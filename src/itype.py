@@ -7,7 +7,10 @@ def i_type(instruction,labels,index):
         op = 3
     elif instruction[1] == 'beq':
         op = 4
-    rs = int(instruction[2].strip('\n'))
+    if int(instruction[2].strip('\n')) > 7:
+        raise ValueError("Arrays must have the same size")
+    else:
+        rs = int(instruction[2].strip('\n'))
     rt = int(instruction[3].strip('\n'))
     try:
         offset = int(instruction[4].strip('\n'))

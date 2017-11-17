@@ -5,6 +5,7 @@ import otype
 import itype
 import jtype
 import fill
+import re
 import validator
 labels = {}
 
@@ -12,7 +13,7 @@ def assembler_r():
     instructions = []
     in_file = open(sys.argv[2], "r")
     for line in in_file:
-        instructions.append(line.split("\t"))
+        instructions.append(re.split("\t| ",line))
     return instructions
 
 def write_output(machine_codes):
@@ -57,5 +58,4 @@ if __name__ == '__main__':
         instructions = assembler_r()
         labels = check_label(instructions)
         check_instuction(instructions,labels)
-    
     sys.exit(0)
