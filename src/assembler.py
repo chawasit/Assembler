@@ -10,7 +10,7 @@ import validator
 
 labels = {}										# create memory name label
 
-											# regular expression each type
+                                                # regular expression each type
 three_params_pattern = r"(\w*)[\t ]+(add|nand|lw|sw|beq)[\t ]+(\w*)[\t ]+(\w*)[\t ]+(-?\w*)[\t ]*(.*)"
 otype_pattern = r"(\w*)[\t ]+(halt|noop)(.*)"
 jtype_pattern = r"(\w*)[\t ]+(jalr)[\t ]+(\w+)[\t ]+(\w+)[\t ]*(.*)"
@@ -38,7 +38,10 @@ def assembler_r():
 
 def write_output(machine_codes):							# write output
     file = open("machine_code.txt","w")
+    address_count = 0
     for machine_code in machine_codes:
+        print("(address " + str(address_count) + "): " + str(machine_code) + " (hex " + str(hex(machine_code)) + ")")
+        address_count += 1
         file.write(str(machine_code) + '\n')
 
 def check_instuction(instructions,labels):
