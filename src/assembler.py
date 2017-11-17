@@ -5,13 +5,14 @@ import otype
 import itype
 import jtype
 import fill
+import re
 labels = {}
 
 def assembler_r():
     instructions = []
     in_file = open(sys.argv[2], "r")
     for line in in_file:
-        instructions.append(line.split("\t"))
+        instructions.append(re.split("\t| ",line))
     return instructions
 
 def write_output(machine_codes):
@@ -55,5 +56,7 @@ def check_label(instructions):
 if __name__ == '__main__':
     if len(sys.argv) == 3:
         instructions = assembler_r()
-        labels = check_label(instructions)
-        check_instuction(instructions,labels)
+        for i in instructions:
+            print i
+        # labels = check_label(instructions)
+        # check_instuction(instructions,labels)
