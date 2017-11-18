@@ -43,7 +43,7 @@ def assembler_r():
 
 # write output
 def write_output(machine_codes):							
-    file = open("machine_code.txt","w")
+    file = open(argv[2],"w")
     address_count = 0
 
     for machine_code in machine_codes:
