@@ -1,13 +1,17 @@
 import sys
-def registor_validator(registor):                                   # check if register is valid
+
+# check if register is valid
+def registor_validator(registor):                                   
     if(registor < 0 or registor > 7):
         sys.exit("invalid register")
 
-def offset_validator(offset):                                       # check if offset is valid
+# check if offset is valid
+def offset_validator(offset):                                       
     if(offset < -32768 or offset > 32767):
         sys.exit("invalid offset")
-    
-def label_isvalid(labels, label):                                   # check if labels, label is valid
+
+# check if labels, label is valid    
+def label_isvalid(labels, label):                                   
     if labels.has_key(label):
         sys.exit("dupicate label")
     elif len(label) > 6:  

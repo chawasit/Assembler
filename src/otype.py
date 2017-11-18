@@ -1,9 +1,17 @@
 #!/usr/bin/python
 
 def otype(instruction,labels):
-    if instruction[1].strip('\r\n') == "halt":                      # initial opcode for halt instruction
+
+    # initial opcode for halt instruction
+    if instruction[1].strip('\r\n') == "halt":                      
         opcode = 6
-        return opcode << 22                                         # shift value to 32-bit
-    elif instruction[1].strip('\r\n') == "noop":                    # initial opcode for noop instruction
+
+        # shift value to 32-bit
+        return opcode << 22
+
+    # initial opcode for noop instruction                                             
+    elif instruction[1].strip('\r\n') == "noop":                    
         opcode = 7
-        return opcode << 22                                         # shift value to 32-bit
+
+        # shift value to 32-bit
+        return opcode << 22                                         
