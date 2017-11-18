@@ -8,9 +8,10 @@ import fill
 import re
 import validator
 
-labels = {}										# create memory name label
+# create memory name label
+labels = {}			
 
-                                                # regular expression each type
+# regular expression each type
 three_params_pattern = r"(\w*)[\t ]+(add|nand|lw|sw|beq)[\t ]+(\w*)[\t ]+(\w*)[\t ]+(-?\w*)[\t ]*(.*)"
 otype_pattern = r"(\w*)[\t ]+(halt|noop)(.*)"
 jtype_pattern = r"(\w*)[\t ]+(jalr)[\t ]+(\w+)[\t ]+(\w+)[\t ]*(.*)"
@@ -20,8 +21,12 @@ patterns = [three_params_pattern, otype_pattern, jtype_pattern, fill_pattern]
 
 def assembler_r():								
     instructions = []
-    in_file = open(sys.argv[1], "r")							# read file
-    for line in in_file:								# write each line in file to instructions 
+
+    # read file
+    in_file = open(sys.argv[1], "r")	
+
+    # write each line in file to instructions 	
+    for line in in_file:								
         find = False
         instruction_group = []
         for pattern in patterns:
@@ -36,11 +41,19 @@ def assembler_r():
         instructions.append(instruction_group)
     return instructions
 
-def write_output(machine_codes):							# write output
+# write output
+def write_output(machine_codes):							
     file = open("machine_code.txt","w")
     address_count = 0
+
     for machine_code in machine_codes:
-        print("(address " + str(address_count) + "): " + str(machine_code) + " (hex " + str(hex(machine_code)) + ")")
+        hex_code = hex(machine_code)  if machine_code >= 0 else  hex(machine_code + 0xFFFFFFFF + 1)
+        print("(address " + str(address_count) 
+                          + "): " 
+                          + str(machine_code) 
+                          + " (hex " 
+                          + str(hex_code) 
+                          + ")")
         address_count += 1
         file.write(str(machine_code) + '\n')
 
@@ -49,16 +62,27 @@ def check_instuction(instructions,labels):
     result = []
     for instruction in instructions:
         opcode = instruction[1].strip()
-        if(opcode == "add" or opcode == "nand"):					# check if it is r-type
+
+        # check if it is r-type
+        if(opcode == "add" or opcode == "nand"):					
             result.append(rtype.rtype(instruction))
-        elif(opcode == "lw" or opcode == "sw" or opcode == "beq"):			# check if it is i-type
+
+        # check if it is i-type
+        elif(opcode == "lw" or opcode == "sw" or opcode == "beq"):			
             result.append (itype.i_type(instruction,labels,memory_index))	
-        elif(opcode == "jalr"):								# check if it is j-type
+
+        # check if it is j-type
+        elif(opcode == "jalr"):								
             result.append(jtype.jtype(instruction))
-        elif(opcode == "halt" or opcode == "noop"):					# check if it is o-type
+        
+        # check if it is o-type
+        elif(opcode == "halt" or opcode == "noop"):					
             result.append(otype.otype(instruction,labels))
-        elif(opcode == ".fill"):							# check if it is .fill 
+        
+        # check if it is .fill 
+        elif(opcode == ".fill"):							
             result.append(fill.fill(instruction,labels))
+        
         else:
             sys.exit("No type")
         memory_index += 1
@@ -67,16 +91,27 @@ def check_instuction(instructions,labels):
 def check_label(instructions):
     memory_index = 0
     for instruction in instructions:
-        label = instruction[0].strip('\r\n')						# filter label
+        
+        # filter label
+        label = instruction[0].strip('\r\n')						
         if(label != ''):
-            if validator.label_isvalid(labels, label):					# check if label is valid 
+            
+            # check if label is valid 
+            if validator.label_isvalid(labels, label):					
                 labels[label] = memory_index
+
         memory_index += 1
     return labels
 
 if __name__ == '__main__':
     if len(sys.argv) == 2:
-        instructions = assembler_r()							# read file and store in instructions
-        labels = check_label(instructions)						# check labels of each instruction
-        check_instuction(instructions,labels)						# filter each instruction to their type
+        
+        # read file and store in instructions
+        instructions = assembler_r()							
+        
+        # check labels of each instruction
+        labels = check_label(instructions)						
+        
+        # filter each instruction to their type
+        check_instuction(instructions,labels)						
     sys.exit(0)
