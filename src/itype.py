@@ -18,11 +18,11 @@ def i_type(instruction,labels,index):
     rt = int(instruction[3].strip('\n'))
     try:
 
-        # check if offset value is integer                                                                    
+        # check if offset value is numeric                                                                    
         offset = int(instruction[4].strip('\n'))
     except:
 
-        # offset value is not interger                                                                 
+        # offset value is symbolic                                                                 
         offset = labels[instruction[4].strip('\n')]
         if instruction[1] == 'beq':
             offset -= index + 1
