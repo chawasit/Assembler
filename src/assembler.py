@@ -43,7 +43,7 @@ def assembler_r():
 
 # write output
 def write_output(machine_codes):							
-    file = open(argv[2],"w")
+    file = open(sys.argv[2],"w")
     address_count = 0
 
     for machine_code in machine_codes:
@@ -104,7 +104,7 @@ def check_label(instructions):
     return labels
 
 if __name__ == '__main__':
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 3:
         
         # read file and store in instructions
         instructions = assembler_r()							
@@ -113,5 +113,7 @@ if __name__ == '__main__':
         labels = check_label(instructions)						
         
         # filter each instruction to their type
-        check_instuction(instructions,labels)						
+        check_instuction(instructions,labels)	
+    else:
+        print("Usage: {} [input assembly] [output path]".format(sys.argv[0]))					
     sys.exit(0)
