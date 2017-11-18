@@ -47,7 +47,7 @@ def write_output(machine_codes):
     address_count = 0
 
     for machine_code in machine_codes:
-        hex_code = hex(machine_code)  if machine_code >= 0 else  hex(machine_code & 0xffff)
+        hex_code = hex(machine_code)  if machine_code >= 0 else  hex(machine_code + 0xFFFFFFFF + 1)
         print("(address " + str(address_count) 
                           + "): " 
                           + str(machine_code) 
