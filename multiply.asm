@@ -9,7 +9,7 @@ sum	add	1	2	1	# add mcand to result(1)
 	nand	3	3	3	# mplier = mplier - mcomp
 shift	add	2	2	2	# shift left mcand
 	add	4	4	4	# shift left mcomp
-	beq	3	0	exit	# if mcomp is zero then exit
+	beq	3	0	exit	# if mplier is zero then exit
 	beq	0	0	loop
 exit	halt
 mcand	.fill	32766
